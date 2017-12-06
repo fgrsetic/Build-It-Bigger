@@ -19,10 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -52,15 +49,15 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent = new Intent(this, JokeActivity.class);
 //        intent.putExtra(JOKE_KEY, jokeFromJavaLibrary);
 //        startActivity(intent);
-
-        new EndpointsAsyncTask(new EndpointsAsyncTask.AsyncResponse() {
+        EndpointAsyncTask endpointsAsyncTask = new EndpointAsyncTask(new EndpointAsyncTask.AsyncResponse(){
             @Override
             public void processFinish(String output) {
-                Intent myIntent = new Intent(getApplicationContext(), JokeActivity.class);
-                myIntent.putExtra(JOKE_KEY, output);
-                startActivity(myIntent);
+                Intent intent = new Intent(getApplicationContext(), JokeActivity.class);
+                intent.putExtra(JOKE_KEY, output);
+                startActivity(intent);
             }
         });
+        endpointsAsyncTask.execute();
 
     }
 }

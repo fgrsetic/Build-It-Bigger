@@ -8,14 +8,12 @@ import android.view.MenuItem;
 
 public class JokeActivity extends AppCompatActivity {
 
-    public static String JOKE_KEY = "Joke key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_joke);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

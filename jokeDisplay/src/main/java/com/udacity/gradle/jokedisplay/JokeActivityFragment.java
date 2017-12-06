@@ -14,6 +14,8 @@ import android.widget.TextView;
  */
 public class JokeActivityFragment extends Fragment {
 
+    public static String JOKE_KEY = "Joke key";
+
     public JokeActivityFragment() {
     }
 
@@ -22,7 +24,7 @@ public class JokeActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_joke, container, false);
         Intent intent = getActivity().getIntent();
-        String joke = intent.getStringExtra(JokeActivity.JOKE_KEY);
+        String joke = intent.getStringExtra(JOKE_KEY);
         TextView jokeTextView = (TextView) root.findViewById(R.id.tvJoke);
         if (joke != null && joke.length() != 0) {
             jokeTextView.setText(joke);

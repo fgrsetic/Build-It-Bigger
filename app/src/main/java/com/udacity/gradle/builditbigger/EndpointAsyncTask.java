@@ -2,7 +2,6 @@ package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Pair;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -16,19 +15,19 @@ import java.io.IOException;
  * Created by Franjo on 6.12.2017..
  */
 
-class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
+public class EndpointAsyncTask extends AsyncTask<Context, Void, String> {
 
+    private Context context;
     private static MyApi myApiService = null;
     private AsyncResponse delegate = null;
 
-    EndpointsAsyncTask(AsyncResponse delegate){
+    EndpointAsyncTask(AsyncResponse delegate){
         this.delegate = delegate;
     }
 
 
-    @SafeVarargs
     @Override
-    protected final String doInBackground(Pair<Context, String>... params) {
+    protected final String doInBackground(Context... params) {
         if(myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -43,15 +42,11 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
                         }
                     });
             // end options for devappserver
-
             myApiService = builder.build();
         }
 
-        Context context = params[0].first;
-        String name = params[0].second;
-
         try {
-            return myApiService.getAJoke().execute().getData();
+            return myApiService.getJoke().execute().getData();
         } catch (IOException e) {
             return e.getMessage();
         }
@@ -61,7 +56,6 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
     protected void onPostExecute(String result) {
         delegate.processFinish(result);
     }
-
 
     // Separate this or combined to caller class
     interface AsyncResponse {
