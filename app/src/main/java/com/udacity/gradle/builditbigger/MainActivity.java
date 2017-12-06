@@ -1,21 +1,26 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.udacity.gradle.jokes.Joker;
+import com.udacity.gradle.jokedisplay.JokeActivity;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    public static String JOKE_KEY = "Joke key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
     }
 
 
@@ -42,11 +47,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        Joker joke = new Joker();
-        String jokeFromJavaLibrary = joke.getJoke();
+//        Joker joke = new Joker();
+//        String jokeFromJavaLibrary = joke.getJoke();
+//        Intent intent = new Intent(this, JokeActivity.class);
+//        intent.putExtra(JOKE_KEY, jokeFromJavaLibrary);
+//        startActivity(intent);
 
-        Toast.makeText(this, jokeFromJavaLibrary, Toast.LENGTH_SHORT).show();
+        new EndpointsAsyncTask(new EndpointsAsyncTask.AsyncResponse() {
+            @Override
+            public void processFinish(String output) {
+                Intent myIntent = new Intent(getApplicationContext(), JokeActivity.class);
+                myIntent.putExtra(JOKE_KEY, output);
+                startActivity(myIntent);
+            }
+        });
+
     }
-
-
 }
+
+
+
+
