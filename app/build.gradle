@@ -16,11 +16,23 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+        freeFlavour {
+            applicationId "com.udacity.gradle.builditbigger.free"
+
+        }
+        paidFlavour {
+            applicationId "com.udacity.gradle.builditbigger.paid"
+
         }
     }
 }
@@ -30,12 +42,15 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26+'
-    compile 'com.google.android.gms:play-services-ads:11.0.4'
     compile project(path: ':javaJokes')
     compile project(path: ':jokeDisplay')
     compile project(path: ':backend', configuration: 'android-endpoints')
 
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.google.android.gms:play-services-ads:11.0.4'
     compile 'com.google.http-client:google-http-client-android:1.23.0'
     compile 'com.google.api-client:google-api-client:1.23.0'
+    compile 'com.android.support:support-v4:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
 }
