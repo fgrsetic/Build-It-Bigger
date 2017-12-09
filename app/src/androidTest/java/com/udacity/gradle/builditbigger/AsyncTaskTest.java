@@ -24,9 +24,10 @@ public class AsyncTaskTest {
 
     @Test
     public void testNonEmptyString() {
-        task = new EndpointAsyncTask(new EndpointAsyncTask.AsyncResponse() {
+        task = new EndpointAsyncTask();
+        task.execute(new OnAsyncReceiveListener() {
             @Override
-            public void processFinish(String output) {
+            public void onReceive(String output) {
                 try {
                     output = task.get(30, TimeUnit.SECONDS);
                 } catch (InterruptedException | ExecutionException | TimeoutException e) {
@@ -37,8 +38,6 @@ public class AsyncTaskTest {
                 assertTrue(output.length() > 0);
             }
         });
-
-        task.execute();
 
     }
 }

@@ -18,4 +18,21 @@ allprojects {
         jcenter()
 
     }
+
+    task startRunAndStopGCEServer {
+        evaluationDependsOn ":backend"
+        project(":backend") {
+            appengine {
+                daemon true
+            }
+        }
+        dependsOn ":backend:appengineRun"
+        dependsOn "app:connectedAndroidTest"
+        dependsOn ":backend:appengineStop"
+
+        doLast {
+            println "Testing done"
+        }
+
+    }
 }

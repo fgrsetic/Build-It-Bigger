@@ -14,7 +14,7 @@ import android.widget.TextView;
  */
 public class JokeActivityFragment extends Fragment {
 
-    public static String JOKE_KEY = "Joke key";
+    private static final String JOKE_KEY = "Joke key";
 
     public JokeActivityFragment() {
     }

@@ -20,6 +20,7 @@ class EndpointAsyncTask extends AsyncTask<OnAsyncReceiveListener, Void, String> 
     private OnAsyncReceiveListener mListener;
 
 
+
     @Override
     protected final String doInBackground(OnAsyncReceiveListener... params) {
         if(myApiService == null) {  // Only do this once

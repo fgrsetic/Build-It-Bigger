@@ -7,7 +7,6 @@ import org.junit.Test;
 public class JokerTest {
     @Test
     public void test() {
-        Joker joker = new Joker();
         assert Joker.getJoke().length() != 0;
     }
 }

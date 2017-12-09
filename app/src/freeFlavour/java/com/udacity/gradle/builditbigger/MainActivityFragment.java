@@ -22,7 +22,6 @@ import com.udacity.gradle.jokedisplay.JokeActivity;
  */
 public class MainActivityFragment extends Fragment implements OnAsyncReceiveListener {
 
-    private static final String TAG = MainActivityFragment.class.getCanonicalName();
     private static final String JOKE_KEY = "Joke key";
 
     private ProgressBar mSpinner;
@@ -46,8 +45,13 @@ public class MainActivityFragment extends Fragment implements OnAsyncReceiveList
 
         // Interstitial ads are requested and shown by InterstitialAd objects
         mInterstitialAd = new InterstitialAd(getContext());
+        // This test ad unit ID for Android has been specially configured to return test ads for every request,
+        // and it is free to use it in apps while coding, testing, and debugging.
+        // Just make sure you replace it with your own ad unit ID before publishing your app
         mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
+        // Make all calls to the Mobile Ads SDK on the main thread
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
 
         btnJoke.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +60,20 @@ public class MainActivityFragment extends Fragment implements OnAsyncReceiveList
             }
         });
 
+
         mInterstitialAd.setAdListener(new AdListener() {
+
+            // Code to be executed when an ad finishes loading
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                AdRequest adRequest = new AdRequest.Builder()
+                        .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                        .build();
+                mInterstitialAd.loadAd(adRequest);
+            }
+
+            // Code to be executed when when the interstitial ad is closed
             @Override
             public void onAdClosed() {
                 super.onAdClosed();
@@ -64,8 +81,14 @@ public class MainActivityFragment extends Fragment implements OnAsyncReceiveList
             }
         });
 
-        loadInterstitialAd();
 
+        loadBannerAd(fragmentView);
+
+
+        return fragmentView;
+    }
+
+    private void loadBannerAd(View fragmentView) {
         AdView mAdView = fragmentView.findViewById(R.id.adView);
         // Create an ad request. Check logcat output for the hashed device ID to
         // get test ads on a physical device. e.g.
@@ -74,15 +97,6 @@ public class MainActivityFragment extends Fragment implements OnAsyncReceiveList
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
         mAdView.loadAd(adRequest);
-
-        return fragmentView;
-    }
-
-    private void loadInterstitialAd() {
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-        mInterstitialAd.loadAd(adRequest);
     }
 
     private void fetchJoke() {
@@ -99,7 +113,6 @@ public class MainActivityFragment extends Fragment implements OnAsyncReceiveList
         } else {
             startJokeDisplayActivity();
         }
-
 
     }
 
